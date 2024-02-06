@@ -195,6 +195,7 @@ public class QA_LegendTestCases extends BaseClass{
 		String item_Rate=ExcelUtility.getString(1, 1, excelfilePath, "Note_Page");
 		itemPage.inputItemRate(item_Rate);
 		itemPage.clickon_item_Save();
+		System.out.println("Trail Git");
 	}
 	
 
