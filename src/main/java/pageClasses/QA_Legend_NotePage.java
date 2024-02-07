@@ -1,5 +1,7 @@
 package pageClasses;
 
+import java.awt.AWTException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,6 +20,12 @@ public class QA_Legend_NotePage {
 	WebElement inputNote_description;
 	@FindBy(xpath = "//button[text()=' Save']")
 	WebElement note_Save_button;
+	@FindBy(xpath = "//button[text()=' Upload File']")
+	WebElement button_UploadFile;
+	@FindBy(xpath = "(//a[@title='Note'])[1]")
+	WebElement actualNoteTitle;
+	@FindBy(xpath = "(//a[@title='Screenshot--1-.jpg'])[1]")
+	WebElement actualUploadedimage; 
 	
 	
 	
@@ -54,5 +62,20 @@ public class QA_Legend_NotePage {
 	}
 	public void clickOnNote_Save_button() {
 		PageUtilities.clickOnElement(note_Save_button);
+		PageUtilities.refreshPage(driver);
+	}
+	public void clickOn_UploadFile() {
+		PageUtilities.clickByJavaScript(button_UploadFile, driver);
+	}
+	public void upload_image(String path) throws AWTException {
+		PageUtilities.fileUpload(button_UploadFile, path);
+	}
+	public String toGetActualNoteTitle() {
+		String actualTitle = PageUtilities.getTextFromElement(actualNoteTitle);
+		return actualTitle;
+	}
+	public String toGetUploadedImageTitle() {
+		String actualImageTitle = PageUtilities.getTextFromElement(actualUploadedimage);
+		return actualImageTitle;
 	}
 }

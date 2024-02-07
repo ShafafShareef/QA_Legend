@@ -36,7 +36,7 @@ public class BaseClass{
 			String destinationFile = System.getProperty("user.dir")+"\\test-output\\"+testCaseName+".png";
 			Files.copy(source,new File(destinationFile));
 			return destinationFile;
-			
+			//driver screenshot method
 		}
 
 

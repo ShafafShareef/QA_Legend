@@ -2,6 +2,7 @@ package utilities;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class DateUtilities {
@@ -19,6 +20,16 @@ public class DateUtilities {
 		return formatedTime;
 		
 		
+	}
+	public static LocalDate getTommarowDate(){
+		LocalDate today = LocalDate.now();
+		LocalDate tomorrow = today.plusDays(1);
+		return tomorrow;
+
+		// In string format
+//		LocalDate today = LocalDate.now();
+//		String tomorrow = (today.plusDays(1)).format(DateTimeFormatter.ISO_DATE);
+
 	}
 
 }

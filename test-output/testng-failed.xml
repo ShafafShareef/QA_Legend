@@ -9,8 +9,8 @@
     <classes>
       <class name="testCases.QA_LegendTestCases">
         <methods>
-          <include name="message_ComposeandSend"/>
           <include name="initialization"/>
+          <include name="applyAndAssignLeave"/>
         </methods>
       </class> <!-- testCases.QA_LegendTestCases -->
     </classes>

@@ -1,11 +1,16 @@
-package testCases;
+ package testCases;
 
+import java.awt.AWTException;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Properties;
 
+import org.apache.poi.util.SystemOutLogger;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -15,16 +20,20 @@ import org.testng.annotations.Test;
 
 import automationCore.BaseClass;
 import dev.failsafe.internal.util.Assert;
+import pageClasses.QA_Legend_AnnouncementPage;
 import pageClasses.QA_Legend_ClientPage;
 import pageClasses.QA_Legend_EventPage;
 import pageClasses.QA_Legend_HomePage;
 import pageClasses.QA_Legend_ItemPage;
+import pageClasses.QA_Legend_LeavePage;
 import pageClasses.QA_Legend_LoginPage;
 import pageClasses.QA_Legend_MessagePage;
 import pageClasses.QA_Legend_NotePage;
 import utilities.DateUtilities;
 import utilities.ExcelUtility;
 import utilities.FakerUtilities;
+import utilities.PageUtilities;
+import utilities.WaitUtilities;
 
 public class QA_LegendTestCases extends BaseClass{
 	public WebDriver driver;
@@ -40,6 +49,8 @@ public class QA_LegendTestCases extends BaseClass{
 	QA_Legend_MessagePage messagePage;
 	QA_Legend_ClientPage clientPage;
 	QA_Legend_ItemPage itemPage;
+	QA_Legend_AnnouncementPage announcementPage;
+	QA_Legend_LeavePage leavePage;
 	
 	
 	
@@ -60,6 +71,8 @@ public class QA_LegendTestCases extends BaseClass{
 		messagePage = new QA_Legend_MessagePage(driver);
 		clientPage = new QA_Legend_ClientPage(driver);
 		itemPage = new QA_Legend_ItemPage(driver);
+		announcementPage = new QA_Legend_AnnouncementPage(driver);
+		leavePage = new QA_Legend_LeavePage(driver);
 		
 		
 		loginPage.enterUserName(prop.getProperty("username"));
@@ -114,23 +127,44 @@ public class QA_LegendTestCases extends BaseClass{
 		eventPage.clickon_Event_Save();
 	}
 	@Test
-	public void add_Notes() throws IOException {
+	public void add_Notes() throws IOException, AWTException, InterruptedException {
 		homePage.clickOnDashboardNotes();
+//		String pageTitle=PageUtilities.getTitleOfThePage(driver);
+//		//System.out.println(pageTitle);
+//		String expecPageTitle = "Demo CRM";
 		notePage.clickOn_AddNote_button();
 		String noteTitle=ExcelUtility.getString(1, 0, excelfilePath, "Note_Page")+FakerUtilities.randomNumberCreation();
 		notePage.addNote_inputTitle(noteTitle);
 		String noteDescription=ExcelUtility.getString(1, 1, excelfilePath, "Note_Page");
 		notePage.addNote_inputDescription(noteDescription);
-		notePage.clickOnNote_Save_button();
 		
 		// file upload image
+		//notePage.clickOn_UploadFile();
+		String path = "C:\\Users\\LENOVO\\eclipse-workspace\\QA_Legend\\src\\main\\java\\testData\\TestImgs\\Screenshot (1).jpg";
+		notePage.upload_image(path);
+		Thread.sleep(3000);
+		
+		notePage.clickOnNote_Save_button();
+		
+		
+		String actualNoteTitle = notePage.toGetActualNoteTitle();
+		org.testng.Assert.assertEquals(actualNoteTitle, noteTitle);
+		
+//		String actualImageTitle = notePage.toGetUploadedImageTitle();
+//		System.out.println(actualImageTitle);
+//		String expectedImageTitle = "Screenshot--1-.jpg";
+//		org.testng.Assert.assertEquals(actualImageTitle, expectedImageTitle);
 		
 	}
 	@Test
 	public void message_ComposeandSend(){
 		homePage.clickOnDashboardMessage();
 		messagePage.clickOnCompose();
-		messagePage.selectRecipiant();
+		messagePage.clickOnTo();
+//		String to_address = "Saumia Alex";
+//		messagePage.inputRecipiantName(to_address);
+		
+		
 		
 		
 		
@@ -197,6 +231,60 @@ public class QA_LegendTestCases extends BaseClass{
 		itemPage.clickon_item_Save();
 		System.out.println("Trail Git");
 	}
+	
+	@Test
+	public void add_Announcements() throws IOException, AWTException, InterruptedException {
+		//PageUtilities.scrollToBottom(driver, 1000);
+		homePage.scrollSidepanel();
+		homePage.clickOnDashboardAnnouncements();
+		announcementPage.clickOn_AddAnnouncement();
+		String announcment_title=ExcelUtility.getString(1, 0, excelfilePath, "Announcement")+FakerUtilities.randomNumberCreation();
+		announcementPage.inputTitle(announcment_title);
+		PageUtilities.enter_TAB_Key();
+		String announcment=ExcelUtility.getString(1, 1, excelfilePath, "Announcement");
+		announcementPage.input_Announcement(announcment);
+		String s_date = DateUtilities.getCurrentDate();
+		announcementPage.input_AnnouncementStartDate(s_date);
+		//LocalDate tdate= DateUtilities.getTommarowDate();
+		String e_date = s_date;
+		announcementPage.input_AnnouncementEndDate(e_date);
+		announcementPage.scrolluptoSave();
+		
+		
+		//String path = "C:\\Users\\LENOVO\\eclipse-workspace\\QA_Legend\\src\\main\\java\\testData\\TestImgs\\Screenshot (1).jpg";
+		//notePage.upload_image(path);
+		//Thread.sleep(3000);
+	
+		//announcementPage.announcement_Savebuton();
+		//Thread.sleep(2000);
+		//PageUtilities.scrollToBottom(driver, 1000);
+		
+		announcementPage.announcement_Savebuton();
+//		WebElement view_Button = driver.findElement(By.xpath("//a[@title='View']"));
+//		Assert.assertEquals(true, view_Button.isDisplayed());
+		String actual_ViewButton_Title = announcementPage.toGetActual_View_button_Title();
+		String expected_ViewButton_Title = "View";
+		org.testng.Assert.assertEquals(actual_ViewButton_Title, expected_ViewButton_Title);
+		
+
+		
+	}
+	@Test
+	public void applyAndAssignLeave() throws IOException 
+	{	
+		homePage.scrollSidepanel();
+		homePage.clickOnDashboardLeave();
+		leavePage.clickOnApplyLeaveButton();
+		leavePage.clickOnLeaveTypeDropDown();
+		leavePage.clickOnCasualLeave();
+		String l_date = DateUtilities.getCurrentDate();
+		leavePage.input_LeaveDate(l_date);
+//		leavePage.enterReasonForLeave(excelFilePath);
+//		leavePage.clickOnDateApplyLeaveInPopUp();
+	}
+
+	
+	
 	
 
 }

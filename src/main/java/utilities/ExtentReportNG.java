@@ -16,7 +16,7 @@
 			reporter.config().setDocumentTitle("TestResults");
 			extent = new ExtentReports(); //Exten
 			extent.attachReporter(reporter);
-			extent.setSystemInfo("Tester", "Saumia");
+			extent.setSystemInfo("Tester", "Shafaf");
 			return extent;
 		}
 

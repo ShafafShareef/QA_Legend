@@ -23,6 +23,13 @@ public class QA_Legend_HomePage {
 	WebElement dashboard_Clients;
 	@FindBy(xpath = "//span[text()='Items']")
 	WebElement dashboard_Items;
+	@FindBy(xpath = "//span[text()='Announcements']")
+	WebElement dashboard_Announcements;
+	@FindBy(xpath = "//span[text()='Leave']")
+	WebElement dashboard_Leave;
+	
+	@FindBy(xpath = "//div[@id='sidebar-scroll']")
+	WebElement dashboar_Scrol;
 	
 	@FindBy(xpath="//a[text()=' Add event']")
 	WebElement button_AddEvent;
@@ -68,6 +75,15 @@ public class QA_Legend_HomePage {
 	}
 	public void clickOnDashboardItem() {
 		PageUtilities.clickOnElement(dashboard_Items);
+	}
+	public void clickOnDashboardAnnouncements() {
+		PageUtilities.clickOnElement(dashboard_Announcements);
+	}
+	public void clickOnDashboardLeave() {
+		PageUtilities.clickOnElement(dashboard_Leave);
+	}
+	public void scrollSidepanel() {
+		PageUtilities.scrollThePage(dashboard_Announcements, driver);
 	}
 	
 }
