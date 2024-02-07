@@ -23,6 +23,10 @@ public class QA_Legend_ClientPage {
 	WebElement input_country;
 	@FindBy(xpath = "//button[text()=' Save']")
 	WebElement client_Save_button;
+	@FindBy(xpath = "//input[@type='search']")
+	WebElement company_SearchBox;
+	@FindBy(xpath = "(//table[@id='client-table']//ancestor::td)[2]")
+	WebElement prev_added_Client;
 	
 	
 	
@@ -66,5 +70,12 @@ public class QA_Legend_ClientPage {
 	}
 	public void clickOnClientSave_button() {
 		PageUtilities.clickOnElement(client_Save_button);
+	}
+	public void search_added_company(String company) {
+		PageUtilities.enterText(company_SearchBox, company);
+	}
+	public String getPre_added_Client () {
+		String prev_Added_client =PageUtilities.getTextFromElement(prev_added_Client);
+		return prev_Added_client;
 	}
 }

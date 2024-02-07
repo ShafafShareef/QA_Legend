@@ -1,10 +1,13 @@
 package pageClasses;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import utilities.ExcelUtility;
 import utilities.PageUtilities;
 import utilities.WaitUtilities;
 
@@ -25,6 +28,8 @@ public class QA_Legend_LeavePage {
 	WebElement applyLeaveButtonInPopUp;
 	@FindBy(xpath = "//textarea[@name='reason']")
 	WebElement reasonTextField;
+	@FindBy(xpath = "//button[text()=' Apply leave']")
+	WebElement leave_Apply_button;
 	
 	
 	
@@ -67,6 +72,19 @@ public class QA_Legend_LeavePage {
 	}
 	public void input_LeaveDate(String l_date) {
 		PageUtilities.enterText(dateField, l_date);
+	}
+	
+
+//	public void enterReasonForLeave(String excelFilePath) throws IOException{
+//		String leave_Reason = ExcelUtility.getString(1, 1, excelFilePath, "LeavePage");
+//		PageUtilities.enterText(reasonTextField, leave_Reason);
+//	}
+	public void enterReasonForLeave(String leave_Reason) {
+		PageUtilities.enterText(reasonTextField, leave_Reason);
+	}
+	public void clickOnApply_Leave_button(){
+		PageUtilities.clickOnElement(leave_Apply_button);
+		
 	}
 
 

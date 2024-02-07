@@ -29,6 +29,7 @@ import pageClasses.QA_Legend_LeavePage;
 import pageClasses.QA_Legend_LoginPage;
 import pageClasses.QA_Legend_MessagePage;
 import pageClasses.QA_Legend_NotePage;
+import pageClasses.QA_Legend_Quick_AddNote;
 import utilities.DateUtilities;
 import utilities.ExcelUtility;
 import utilities.FakerUtilities;
@@ -51,6 +52,7 @@ public class QA_LegendTestCases extends BaseClass{
 	QA_Legend_ItemPage itemPage;
 	QA_Legend_AnnouncementPage announcementPage;
 	QA_Legend_LeavePage leavePage;
+	QA_Legend_Quick_AddNote quickaddNotePage;
 	
 	
 	
@@ -73,6 +75,7 @@ public class QA_LegendTestCases extends BaseClass{
 		itemPage = new QA_Legend_ItemPage(driver);
 		announcementPage = new QA_Legend_AnnouncementPage(driver);
 		leavePage = new QA_Legend_LeavePage(driver);
+		quickaddNotePage = new QA_Legend_Quick_AddNote(driver);
 		
 		
 		loginPage.enterUserName(prop.getProperty("username"));
@@ -106,7 +109,7 @@ public class QA_LegendTestCases extends BaseClass{
 		homePage.clickOnLogoutButton();
 	}
 	@Test
-	public void addEvent() throws IOException {
+	public void addEvent () throws IOException {
 		homePage.clickonDashboardEvents();
 		eventPage.clickonAddEvents();
 		//System.out.println(excelfilePath);
@@ -119,34 +122,25 @@ public class QA_LegendTestCases extends BaseClass{
 		String startDate = DateUtilities.getCurrentDate();
 		String startTime = DateUtilities.getCurrenttime();
 		eventPage.inputEventStartDate(startDate);
-		//eventPage.inputEventStartTime(startTime);
+		eventPage.inputEventStartTime(startTime);
 		String endDate = startDate;
 		eventPage.inputEventEndDate(endDate);
 		String event_Location=ExcelUtility.getString(1, 2, excelfilePath, "Sheet1");
 		eventPage.inputEventLocation(event_Location);
-		eventPage.clickon_Event_Save();
+		eventPage.clickon_Event_Save(); 
 	}
 	@Test
 	public void add_Notes() throws IOException, AWTException, InterruptedException {
 		homePage.clickOnDashboardNotes();
-//		String pageTitle=PageUtilities.getTitleOfThePage(driver);
-//		//System.out.println(pageTitle);
-//		String expecPageTitle = "Demo CRM";
 		notePage.clickOn_AddNote_button();
 		String noteTitle=ExcelUtility.getString(1, 0, excelfilePath, "Note_Page")+FakerUtilities.randomNumberCreation();
 		notePage.addNote_inputTitle(noteTitle);
 		String noteDescription=ExcelUtility.getString(1, 1, excelfilePath, "Note_Page");
-		notePage.addNote_inputDescription(noteDescription);
-		
-		// file upload image
-		//notePage.clickOn_UploadFile();
-		String path = "C:\\Users\\LENOVO\\eclipse-workspace\\QA_Legend\\src\\main\\java\\testData\\TestImgs\\Screenshot (1).jpg";
+		notePage.addNote_inputDescription(noteDescription);		
+		String path = prop.getProperty("screenshot_Path");
 		notePage.upload_image(path);
 		Thread.sleep(3000);
-		
 		notePage.clickOnNote_Save_button();
-		
-		
 		String actualNoteTitle = notePage.toGetActualNoteTitle();
 		org.testng.Assert.assertEquals(actualNoteTitle, noteTitle);
 		
@@ -174,10 +168,10 @@ public class QA_LegendTestCases extends BaseClass{
 	}
 	
 	@Test
-	public void add_Client() throws IOException {
+	public void add_Client() throws IOException, InterruptedException {
 		homePage.clickOnDashboardClients();
 		clientPage.clickOnAddClient();
-		String companyName=ExcelUtility.getString(1, 0, excelfilePath, "Sheet2");
+		String companyName=ExcelUtility.getString(1, 0, excelfilePath, "Sheet2")+FakerUtilities.randomNumberCreation();
 		clientPage.inputCompanyName(companyName);
 		String address=ExcelUtility.getString(1, 1, excelfilePath, "Sheet2");
 		clientPage.inputAddress(address);
@@ -188,6 +182,10 @@ public class QA_LegendTestCases extends BaseClass{
 		String country=ExcelUtility.getString(1, 4, excelfilePath, "Sheet2");
 		clientPage.inputCountry(country);
 		clientPage.clickOnClientSave_button();
+		Thread.sleep(2000 );
+		clientPage.search_added_company(companyName);
+		String addedCmpany = clientPage.getPre_added_Client();
+		org.testng.Assert.assertEquals(companyName, addedCmpany);
 		
 		
 		
@@ -219,7 +217,7 @@ public class QA_LegendTestCases extends BaseClass{
 	
 	
 	@Test
-	public void add_Item() throws IOException {
+	public void add_Item() throws IOException, InterruptedException {
 		homePage.clickOnDashboardItem();
 		itemPage.clickOnAddItem();
 		String event_Title=ExcelUtility.getString(1, 0, excelfilePath, "Note_Page")+FakerUtilities.randomNumberCreation();
@@ -229,7 +227,14 @@ public class QA_LegendTestCases extends BaseClass{
 		String item_Rate=ExcelUtility.getString(1, 1, excelfilePath, "Note_Page");
 		itemPage.inputItemRate(item_Rate);
 		itemPage.clickon_item_Save();
-		System.out.println("Trail Git");
+		Thread.sleep(2000);
+		String item = event_Title;
+		itemPage.search_added_item(item);
+		String adde_item = itemPage.getPre_added_Item();
+//		System.out.println(adde_item);
+//		System.out.println(event_Title);
+		org.testng.Assert.assertEquals(event_Title, adde_item);
+		
 	}
 	
 	@Test
@@ -270,17 +275,61 @@ public class QA_LegendTestCases extends BaseClass{
 		
 	}
 	@Test
-	public void applyAndAssignLeave() throws IOException 
+	public void applyAndAssignLeave() throws IOException, InterruptedException 
 	{	
 		homePage.scrollSidepanel();
 		homePage.clickOnDashboardLeave();
+		String title_ofLeave_Page=PageUtilities.getTitleOfThePage(driver);
 		leavePage.clickOnApplyLeaveButton();
 		leavePage.clickOnLeaveTypeDropDown();
 		leavePage.clickOnCasualLeave();
 		String l_date = DateUtilities.getCurrentDate();
 		leavePage.input_LeaveDate(l_date);
-//		leavePage.enterReasonForLeave(excelFilePath);
-//		leavePage.clickOnDateApplyLeaveInPopUp();
+		String leave_Reason=ExcelUtility.getString(1, 0, excelfilePath, "Leave");
+		Thread.sleep(2000);
+		leavePage.enterReasonForLeave(leave_Reason);
+		leavePage.clickOnApply_Leave_button();
+		String title_ofthe_Page = PageUtilities.getTitleOfThePage(driver);
+		org.testng.Assert.assertEquals(title_ofLeave_Page, title_ofthe_Page);
+		 
+	}
+	@Test
+	public void addNoteusingQuickIcon() throws IOException, AWTException, InterruptedException {
+		quickaddNotePage.clickOnQuickAddIcon();
+		quickaddNotePage.clickOnAddNote();
+		String noteTitle=ExcelUtility.getString(1, 0, excelfilePath, "Note_Page")+FakerUtilities.randomNumberCreation();
+		notePage.addNote_inputTitle(noteTitle);
+		String noteDescription=ExcelUtility.getString(1, 1, excelfilePath, "Note_Page");
+		notePage.addNote_inputDescription(noteDescription);		
+		String path = prop.getProperty("screenshot_Path");
+		notePage.upload_image(path);
+		Thread.sleep(3000);
+		notePage.clickOnNote_Save_button();
+		Thread.sleep(2000);
+		homePage.clickOnDashboardNotes();  
+		String actualNoteTitle = notePage.toGetActualNoteTitle();
+		org.testng.Assert.assertEquals(actualNoteTitle, noteTitle);
+		
+		
+	}
+	@Test
+	public void addEventByQuickIcon() throws IOException {
+		quickaddNotePage.clickOnQuickAddIcon();
+		quickaddNotePage.clickOnAddEvent();
+		String event_Title=ExcelUtility.getString(1, 0, excelfilePath, "Sheet1")+FakerUtilities.randomNumberCreation();
+		eventPage.inputTitle(event_Title);
+		String event_Description_=ExcelUtility.getString(1, 1, excelfilePath, "Sheet1");
+		eventPage.inputEventDescription(event_Description_);
+		String startDate = DateUtilities.getCurrentDate();
+		String startTime = DateUtilities.getCurrenttime();
+		eventPage.inputEventStartDate(startDate);
+		eventPage.inputEventStartTime(startTime);
+		String endDate = startDate;
+		eventPage.inputEventEndDate(endDate);
+		String event_Location=ExcelUtility.getString(1, 2, excelfilePath, "Sheet1");
+		eventPage.inputEventLocation(event_Location);
+		eventPage.clickon_Event_Save();
+
 	}
 
 	

@@ -20,6 +20,10 @@ public class QA_Legend_ItemPage {
 	WebElement additem_Save_button;
 	@FindBy(xpath = "//input[@id='item_rate']")
 	WebElement additem_Rate;
+	@FindBy(xpath = "//input[@type='search']")
+	WebElement item_searchBox;
+	@FindBy(xpath = "(//table[@id='item-table']//ancestor::td)[1]")
+	WebElement previously_added_Item;
 	
 	
 	
@@ -54,6 +58,13 @@ public class QA_Legend_ItemPage {
 	}
 	public void clickon_item_Save() {
 		PageUtilities.clickOnElement(additem_Save_button);
+	}
+	public void search_added_item(String item) {
+		PageUtilities.enterText(item_searchBox, item);
+	}
+	public String getPre_added_Item() {
+		String prev_Added_Item =PageUtilities.getTextFromElement(previously_added_Item);
+		return prev_Added_Item;
 	}
 	
 }
