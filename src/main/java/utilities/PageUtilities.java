@@ -22,7 +22,6 @@ import org.openxmlformats.schemas.drawingml.x2006.main.CTTextBulletTypefaceFollo
 public class PageUtilities {
 	public static void closeBrowser(WebDriver driver) {
 		driver.close();
-		// doubt
 	}
 	public static void clickOnElement(WebElement element){
 		element.click();
@@ -140,39 +139,32 @@ public class PageUtilities {
 		Actions actions= new Actions(driver);
 		actions.clickAndHold().build().perform();
 	}
-	public static void doubleClick(WebDriver driver)
-	{
+	public static void doubleClick(WebDriver driver){
 		Actions actions= new Actions(driver);
 		actions.doubleClick().build().perform();
 	}
-	public static void doubleClickOnElement(WebDriver driver,WebElement element)
-	{
+	public static void doubleClickOnElement(WebDriver driver,WebElement element){
 		Actions actions= new Actions(driver);
 		actions.doubleClick(element).build().perform();
 	}
-	public static void rightClick(WebDriver driver)
-	{
+	public static void rightClick(WebDriver driver){
 		Actions actions= new Actions(driver);
 		actions.contextClick().build().perform();
 	}
-	public static void rightClickOnElement(WebDriver driver,WebElement element)
-	{
+	public static void rightClickOnElement(WebDriver driver,WebElement element){
 		Actions actions= new Actions(driver);
 		actions.contextClick(element).build().perform();
 	}
 	
-	public static void moveToElement(WebDriver driver, WebElement element) 
-	{
+	public static void moveToElement(WebDriver driver, WebElement element){
 	    Actions actions = new Actions(driver);
 	    actions.moveToElement(element).build().perform();
 	}
-	public static void dragAndDropElement(WebDriver driver, WebElement fromLocation,WebElement toLocation) 
-	{
+	public static void dragAndDropElement(WebDriver driver, WebElement fromLocation,WebElement toLocation){
 	    Actions actions = new Actions(driver);
 	    actions.dragAndDrop(fromLocation,toLocation).build().perform();
 	}
-	public static void releaseElement(WebDriver driver,WebElement element)
-	{
+	public static void releaseElement(WebDriver driver,WebElement element){
 		Actions actions = new Actions(driver);
 		actions.release(element);	
 	}
@@ -191,14 +183,12 @@ public class PageUtilities {
 		actions.sendKeys(Keys.ARROW_DOWN).build().perform();
 	}
 	
-	public static void clickOn(WebDriver driver,String value)
-	{
+	public static void clickOn(WebDriver driver,String value){
 		Actions actions = new Actions(driver);
 		actions.sendKeys(Keys.valueOf(value)).build().perform();
 	}
 
-	public static void singleTabHandling(WebDriver driver,WebElement element)
-	{
+	public static void singleTabHandling(WebDriver driver,WebElement element){
 		driver.getWindowHandle();
 	}
 	
@@ -274,10 +264,6 @@ public class PageUtilities {
 	}
 	
 	
-	private static void typeTxet(Robot robot, String string) {
-		// TODO Auto-generated method stub
-		
-	}
 	public static void windowHandling(WebDriver driver)
 	{
 		driver.getWindowHandle();

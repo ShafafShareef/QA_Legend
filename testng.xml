@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
+	
+	<!-- <groups>
+		<run>
+			 <include name="LoginScnarions"></include> 
+		</run>
+	</groups> -->
+	
 	<listeners>
 		<listener class-name="testCases.Listeners"></listener>
 	</listeners>
+	
+		
+	
   <test thread-count="5" name="Test">
 	  <parameter name="browser" value="Chrome"></parameter>
 	  <classes>
 		  <class name="testCases.QA_LegendTestCases">
-			  <methods>
+			<!--   <methods> 
 				   
-				 <!--  <include name="message_ComposeandSend"></include>-->
-				 <!-- <include name="add_Notes"></include> -->
-				 <!-- <include name="add_Item"></include> -->
-				   <!-- <include name="add_Announcements"></include> -->
-				   <include name="addEvent"> </include> 
+				  <include name="message_ComposeandSend"></include>
+				  <include name="add_Notes"></include>
+				  <include name="add_Item"></include> 
+				    <include name="add_Announcements"></include>
+				   <include name="add_Notes"> </include>
 				  
-			  </methods>
+			  </methods> -->
+			  
 		  </class>
 	  </classes>
   </test> <!-- Test -->

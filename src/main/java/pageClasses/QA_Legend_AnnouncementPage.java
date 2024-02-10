@@ -25,6 +25,8 @@ public class QA_Legend_AnnouncementPage {
 	WebElement announcement_SaveButton;
 	@FindBy(xpath = "//a[@title='View']")
 	WebElement announcement_View_button;
+	@FindBy(xpath = "//a[text()='Announcements']")
+	WebElement view_BackAnnouncementbutton;
 	
 	
 	
@@ -72,5 +74,12 @@ public class QA_Legend_AnnouncementPage {
 	public String toGetActual_View_button_Title() {
 		String actualTitle = PageUtilities.getTextFromElement(announcement_View_button);
 		return actualTitle;
+	}
+	public void cliclOnViewButton() {
+		PageUtilities.clickOnElement(announcement_View_button);
+	}
+	public String viewAnnouncementsBackButtonStatus() {
+		 String status = PageUtilities.getTextFromElement(view_BackAnnouncementbutton);
+		 return status;
 	}
 }

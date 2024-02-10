@@ -1,7 +1,9 @@
 package automationCore;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.OutputType;
@@ -12,8 +14,12 @@ import org.openqa.selenium.edge.EdgeDriver;
 
 import com.google.common.io.Files;
 
+
 public class BaseClass{
 	public WebDriver driver;
+	
+	
+	
 	public WebDriver browserInitization(String browserName) throws Exception
 	{
 		if(browserName.equalsIgnoreCase("Chrome")) {
@@ -28,9 +34,11 @@ public class BaseClass{
 		driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS);
 		return driver;
 	}
+	
+	
+	
 		
-		public String getScreenShotPath(String testCaseName, WebDriver driver) throws IOException
-		{
+		public String getScreenShotPath(String testCaseName, WebDriver driver) throws IOException{
 			TakesScreenshot ts = (TakesScreenshot)driver; 
 			File source = ts.getScreenshotAs(OutputType.FILE);
 			String destinationFile = System.getProperty("user.dir")+"\\test-output\\"+testCaseName+".png";

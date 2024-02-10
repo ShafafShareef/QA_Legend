@@ -13,6 +13,10 @@ public class QA_Legend_HomePage {
 	WebElement userProfileName;
 	@FindBy(xpath = "//a[text()=' Sign Out']")
 	WebElement logoutButton;
+	@FindBy(xpath = "//span[text()='Authentication failed!']")
+	WebElement authentication_failed_popup;
+	@FindBy(xpath = "//button[text()='Sign in']")
+	WebElement loginButton;
 	@FindBy(xpath = "//span[text()='Events']")
 	WebElement dashboard_Events;
 	@FindBy(xpath = "//span[text()='Notes']")
@@ -84,6 +88,14 @@ public class QA_Legend_HomePage {
 	}
 	public void scrollSidepanel() {
 		PageUtilities.scrollThePage(dashboard_Announcements, driver);
+	}
+	public boolean checkPresenceOfLogin_button() {
+		boolean loginButton_Status = PageUtilities.isElementDisplayed(loginButton);
+		return loginButton_Status;
+	}
+	public boolean checkPresenceOfauthentication_failed_popup() {
+		boolean status_failed_popup = PageUtilities.isElementDisplayed(authentication_failed_popup);
+		return status_failed_popup;
 	}
 	
 }

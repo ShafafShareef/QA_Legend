@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.apache.poi.util.SystemOutLogger;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
@@ -37,22 +38,23 @@ import utilities.PageUtilities;
 import utilities.WaitUtilities;
 
 public class QA_LegendTestCases extends BaseClass{
-	public WebDriver driver;
+	WebDriver driver;
+	
 	FileInputStream fis;
-	Properties prop;
-	String excelfilePath = "/src/main/java/testData/testdata_Excel.xlsx";
+	 Properties prop;
+	 final String excelfilePath = "/src/main/java/testData/testdata_Excel.xlsx";
 	
 	
-	QA_Legend_LoginPage loginPage;
-	QA_Legend_HomePage homePage;
-	QA_Legend_EventPage eventPage;
-	QA_Legend_NotePage notePage;
-	QA_Legend_MessagePage messagePage;
-	QA_Legend_ClientPage clientPage;
-	QA_Legend_ItemPage itemPage;
-	QA_Legend_AnnouncementPage announcementPage;
-	QA_Legend_LeavePage leavePage;
-	QA_Legend_Quick_AddNote quickaddNotePage;
+	 QA_Legend_LoginPage loginPage;
+	 QA_Legend_HomePage homePage;
+	 QA_Legend_EventPage eventPage;
+	 QA_Legend_NotePage notePage;
+	 QA_Legend_MessagePage messagePage;
+	 QA_Legend_ClientPage clientPage;
+	 QA_Legend_ItemPage itemPage;
+	 QA_Legend_AnnouncementPage announcementPage;
+	 QA_Legend_LeavePage leavePage;
+	 QA_Legend_Quick_AddNote quickaddNotePage;
 	
 	
 	
@@ -83,9 +85,11 @@ public class QA_LegendTestCases extends BaseClass{
 		loginPage.clickLoginButton();
 		
 		}
+
 	
+		
 	
-	@Test(priority = 1)
+	@Test(groups = {"LoginScnarions"})
 	
 	public void loginCRM() { 
 		homePage.clickOnUserProfileName();
@@ -95,25 +99,50 @@ public class QA_LegendTestCases extends BaseClass{
 		loginPage.clickLoginButton();
 		String expectedUserName = prop.getProperty("profileName");
 		String actualUserName = homePage.getProfileName();
-		org.testng.Assert.assertEquals(actualUserName, expectedUserName);
-		
-		
+		org.testng.Assert.assertEquals(actualUserName, expectedUserName);	
 		
 	}
-	@Test(priority = 2)
+	@Test(priority = 2,groups = {"LoginScnarions"})
 	public void logoutCRM() {
-//		loginPage.enterUserName(prop.getProperty("username"));
-//		loginPage.enterPassword(prop.getProperty("password"));
-//		loginPage.clickLoginButton();
 		homePage.clickOnUserProfileName();
 		homePage.clickOnLogoutButton();
+		boolean login_Status = homePage.checkPresenceOfLogin_button();
+		//System.out.println(login_Status);
+		boolean expec_Status = true;
+		org.testng.Assert.assertEquals(login_Status, expec_Status);
 	}
-	@Test
+	@Test(dataProvider = "test_login_credentials" , priority = 3, groups = {"LoginScnarions"})
+	public void login_Negative_Scnrios(String userName, String password) throws InterruptedException {
+		homePage.clickOnUserProfileName();
+		homePage.clickOnLogoutButton();
+		loginPage.enterUserName(userName);
+		loginPage.enterPassword(password);
+		loginPage.clickLoginButton();
+		Thread.sleep(3000);
+		boolean auth_fail_popup = homePage.checkPresenceOfauthentication_failed_popup();
+		boolean expec_popup = true;
+		org.testng.Assert.assertEquals(auth_fail_popup, expec_popup);
+		
+	}
+	@DataProvider(name = "test_login_credentials")
+	public Object[][] testData(){
+		Object [][] login_data = new Object[3][2];
+		login_data[0][0] = "admin@admin.comm";
+		login_data[0][1] = "123456789";
+		login_data[1][0] = "admin@adm.com";
+		login_data[1][1] = "12345678";
+		login_data[2][0] = "admin@admin.com";
+		login_data[2][1] = "123456789";
+		return login_data;
+		
+	}
+	
+	
+	
+	@Test(priority = 4)
 	public void addEvent () throws IOException {
 		homePage.clickonDashboardEvents();
 		eventPage.clickonAddEvents();
-		//System.out.println(excelfilePath);
-		//eventPage.clickonTitleField();
 		String event_Title=ExcelUtility.getString(1, 0, excelfilePath, "Sheet1")+FakerUtilities.randomNumberCreation();
 		eventPage.inputTitle(event_Title);
 		String event_Description_=ExcelUtility.getString(1, 1, excelfilePath, "Sheet1");
@@ -128,8 +157,33 @@ public class QA_LegendTestCases extends BaseClass{
 		String event_Location=ExcelUtility.getString(1, 2, excelfilePath, "Sheet1");
 		eventPage.inputEventLocation(event_Location);
 		eventPage.clickon_Event_Save(); 
+		String expec_url = prop.getProperty("addEvent_url");
+		org.testng.Assert.assertEquals(driver.getCurrentUrl(), expec_url);
 	}
-	@Test
+	
+	@Test(priority = 5)
+	public void addEventByQuickIcon() throws IOException {
+		quickaddNotePage.clickOnQuickAddIcon();
+		quickaddNotePage.clickOnAddEvent();
+		String event_Title=ExcelUtility.getString(1, 0, excelfilePath, "Sheet1")+FakerUtilities.randomNumberCreation();
+		eventPage.inputTitle(event_Title);
+		String event_Description_=ExcelUtility.getString(1, 1, excelfilePath, "Sheet1");
+		eventPage.inputEventDescription(event_Description_);
+		String startDate = DateUtilities.getCurrentDate();
+		String startTime = DateUtilities.getCurrenttime();
+		eventPage.inputEventStartDate(startDate);
+		eventPage.inputEventStartTime(startTime);
+		String endDate = startDate;
+		eventPage.inputEventEndDate(endDate);
+		String event_Location=ExcelUtility.getString(1, 2, excelfilePath, "Sheet1");
+		eventPage.inputEventLocation(event_Location);
+		eventPage.clickon_Event_Save();
+
+	}
+
+
+	
+	@Test(priority = 6)
 	public void add_Notes() throws IOException, AWTException, InterruptedException {
 		homePage.clickOnDashboardNotes();
 		notePage.clickOn_AddNote_button();
@@ -142,32 +196,47 @@ public class QA_LegendTestCases extends BaseClass{
 		Thread.sleep(3000);
 		notePage.clickOnNote_Save_button();
 		String actualNoteTitle = notePage.toGetActualNoteTitle();
-		org.testng.Assert.assertEquals(actualNoteTitle, noteTitle);
-		
-//		String actualImageTitle = notePage.toGetUploadedImageTitle();
-//		System.out.println(actualImageTitle);
-//		String expectedImageTitle = "Screenshot--1-.jpg";
-//		org.testng.Assert.assertEquals(actualImageTitle, expectedImageTitle);
-		
+		org.testng.Assert.assertEquals(actualNoteTitle, noteTitle);		
 	}
-	@Test
-	public void message_ComposeandSend(){
+	@Test(priority = 7)
+	public void addNoteusingQuickIcon() throws IOException, AWTException, InterruptedException {
+		quickaddNotePage.clickOnQuickAddIcon();
+		quickaddNotePage.clickOnAddNote();
+		String noteTitle=ExcelUtility.getString(1, 0, excelfilePath, "Note_Page")+FakerUtilities.randomNumberCreation();
+		notePage.addNote_inputTitle(noteTitle);
+		String noteDescription=ExcelUtility.getString(1, 1, excelfilePath, "Note_Page");
+		notePage.addNote_inputDescription(noteDescription);		
+		String path = prop.getProperty("screenshot_Path");
+		notePage.upload_image(path);
+		Thread.sleep(3000);
+		notePage.clickOnNote_Save_button();
+		Thread.sleep(2000);
+		homePage.clickOnDashboardNotes();  
+		String actualNoteTitle = notePage.toGetActualNoteTitle();
+		org.testng.Assert.assertEquals(actualNoteTitle, noteTitle);	
+	}
+
+	
+	
+	@Test(priority = 8)
+	public void message_ComposeandSend() throws InterruptedException, IOException{
 		homePage.clickOnDashboardMessage();
-		messagePage.clickOnCompose();
-		messagePage.clickOnTo();
-//		String to_address = "Saumia Alex";
-//		messagePage.inputRecipiantName(to_address);
-		
-		
-		
-		
-		
-		
-		// to complete
-		
+		messagePage.clickOnComposeButton();
+		messagePage.clickOnRecepientDropDown();
+		messagePage.selectRecepientFromDropdown();
+		String expSubject = messagePage.enterSubjectInComposeMessagePopUp(excelfilePath);
+		String expMessage = messagePage.enterMessagetInComposeMessagePopUp(excelfilePath);
+		messagePage.clickOnSaveButton();
+		messagePage.clickOnSentItems();
+		messagePage.clickOnTheMessageSentFromSentItems();
+		String actualSubject = messagePage.getActualSubject();
+		String actualMessage = messagePage.getActualMessage();
+		System.out.println(actualMessage);
+		System.out.println(actualSubject);
+		org.testng.Assert.assertTrue(actualMessage.contains(expMessage)&&actualSubject.contains(expSubject));	
 	}
 	
-	@Test
+	@Test(priority = 9)
 	public void add_Client() throws IOException, InterruptedException {
 		homePage.clickOnDashboardClients();
 		clientPage.clickOnAddClient();
@@ -191,32 +260,14 @@ public class QA_LegendTestCases extends BaseClass{
 		
 	}
 	
-	@Test(dataProvider = "test_login_credentials")
-	public void loginScnrios(String userName, String password) {
-		homePage.clickOnUserProfileName();
-		homePage.clickOnLogoutButton();
-		loginPage.enterUserName(userName);
-		loginPage.enterPassword(password);
-		loginPage.clickLoginButton();
-		
-		
-		
-	}
-	@DataProvider(name = "test_login_credentials")
-	public Object[][] testData(){
-		Object [][] login_data = new Object[3][2];
-		login_data[0][0] = "admin@admin.com";
-		login_data[0][1] = "12345678";
-		login_data[1][0] = "admin@adm.com";
-		login_data[1][1] = "12345678";
-		login_data[2][0] = "admin@admin.com";
-		login_data[2][1] = "123456789";
-		return login_data;
-		
-	}
 	
 	
-	@Test
+	
+	
+	
+	
+	
+	@Test(priority = 10)
 	public void add_Item() throws IOException, InterruptedException {
 		homePage.clickOnDashboardItem();
 		itemPage.clickOnAddItem();
@@ -231,21 +282,17 @@ public class QA_LegendTestCases extends BaseClass{
 		String item = event_Title;
 		itemPage.search_added_item(item);
 		String adde_item = itemPage.getPre_added_Item();
-//		System.out.println(adde_item);
-//		System.out.println(event_Title);
 		org.testng.Assert.assertEquals(event_Title, adde_item);
 		
 	}
 	
-	@Test
+	@Test(priority = 11)
 	public void add_Announcements() throws IOException, AWTException, InterruptedException {
-		//PageUtilities.scrollToBottom(driver, 1000);
 		homePage.scrollSidepanel();
 		homePage.clickOnDashboardAnnouncements();
 		announcementPage.clickOn_AddAnnouncement();
 		String announcment_title=ExcelUtility.getString(1, 0, excelfilePath, "Announcement")+FakerUtilities.randomNumberCreation();
 		announcementPage.inputTitle(announcment_title);
-		PageUtilities.enter_TAB_Key();
 		String announcment=ExcelUtility.getString(1, 1, excelfilePath, "Announcement");
 		announcementPage.input_Announcement(announcment);
 		String s_date = DateUtilities.getCurrentDate();
@@ -253,20 +300,8 @@ public class QA_LegendTestCases extends BaseClass{
 		//LocalDate tdate= DateUtilities.getTommarowDate();
 		String e_date = s_date;
 		announcementPage.input_AnnouncementEndDate(e_date);
-		announcementPage.scrolluptoSave();
-		
-		
-		//String path = "C:\\Users\\LENOVO\\eclipse-workspace\\QA_Legend\\src\\main\\java\\testData\\TestImgs\\Screenshot (1).jpg";
-		//notePage.upload_image(path);
-		//Thread.sleep(3000);
-	
-		//announcementPage.announcement_Savebuton();
-		//Thread.sleep(2000);
-		//PageUtilities.scrollToBottom(driver, 1000);
-		
+		announcementPage.scrolluptoSave();	
 		announcementPage.announcement_Savebuton();
-//		WebElement view_Button = driver.findElement(By.xpath("//a[@title='View']"));
-//		Assert.assertEquals(true, view_Button.isDisplayed());
 		String actual_ViewButton_Title = announcementPage.toGetActual_View_button_Title();
 		String expected_ViewButton_Title = "View";
 		org.testng.Assert.assertEquals(actual_ViewButton_Title, expected_ViewButton_Title);
@@ -274,7 +309,7 @@ public class QA_LegendTestCases extends BaseClass{
 
 		
 	}
-	@Test
+	@Test(priority = 12)
 	public void applyAndAssignLeave() throws IOException, InterruptedException 
 	{	
 		homePage.scrollSidepanel();
@@ -293,46 +328,7 @@ public class QA_LegendTestCases extends BaseClass{
 		org.testng.Assert.assertEquals(title_ofLeave_Page, title_ofthe_Page);
 		 
 	}
-	@Test
-	public void addNoteusingQuickIcon() throws IOException, AWTException, InterruptedException {
-		quickaddNotePage.clickOnQuickAddIcon();
-		quickaddNotePage.clickOnAddNote();
-		String noteTitle=ExcelUtility.getString(1, 0, excelfilePath, "Note_Page")+FakerUtilities.randomNumberCreation();
-		notePage.addNote_inputTitle(noteTitle);
-		String noteDescription=ExcelUtility.getString(1, 1, excelfilePath, "Note_Page");
-		notePage.addNote_inputDescription(noteDescription);		
-		String path = prop.getProperty("screenshot_Path");
-		notePage.upload_image(path);
-		Thread.sleep(3000);
-		notePage.clickOnNote_Save_button();
-		Thread.sleep(2000);
-		homePage.clickOnDashboardNotes();  
-		String actualNoteTitle = notePage.toGetActualNoteTitle();
-		org.testng.Assert.assertEquals(actualNoteTitle, noteTitle);
-		
-		
-	}
-	@Test
-	public void addEventByQuickIcon() throws IOException {
-		quickaddNotePage.clickOnQuickAddIcon();
-		quickaddNotePage.clickOnAddEvent();
-		String event_Title=ExcelUtility.getString(1, 0, excelfilePath, "Sheet1")+FakerUtilities.randomNumberCreation();
-		eventPage.inputTitle(event_Title);
-		String event_Description_=ExcelUtility.getString(1, 1, excelfilePath, "Sheet1");
-		eventPage.inputEventDescription(event_Description_);
-		String startDate = DateUtilities.getCurrentDate();
-		String startTime = DateUtilities.getCurrenttime();
-		eventPage.inputEventStartDate(startDate);
-		eventPage.inputEventStartTime(startTime);
-		String endDate = startDate;
-		eventPage.inputEventEndDate(endDate);
-		String event_Location=ExcelUtility.getString(1, 2, excelfilePath, "Sheet1");
-		eventPage.inputEventLocation(event_Location);
-		eventPage.clickon_Event_Save();
-
-	}
-
-	
+			
 	
 	
 
