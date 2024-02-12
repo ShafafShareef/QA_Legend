@@ -1,0 +1,17 @@
+utilities\ExtentReportNG.class
+utilities\FakerUtilities.class
+pageClasses\QA_Legend_ItemPage.class
+pageClasses\QA_Legend_ClientPage.class
+pageClasses\QA_Legend_LoginPage.class
+pageClasses\QA_Legend_Quick_AddNote.class
+utilities\ExcelUtility.class
+pageClasses\QA_Legend_HomePage.class
+pageClasses\QA_Legend_NotePage.class
+pageClasses\QA_Legend_MessagePage.class
+utilities\DateUtilities.class
+automationCore\BaseClass.class
+pageClasses\QA_Legend_AnnouncementPage.class
+pageClasses\QA_Legend_EventPage.class
+pageClasses\QA_Legend_LeavePage.class
+utilities\PageUtilities.class
+utilities\WaitUtilities.class

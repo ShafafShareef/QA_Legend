@@ -3,6 +3,7 @@
   <groupId>com.obsqura</groupId>
   <artifactId>QA_Legend</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+   <name>QA_Legend</name>
   
   <build>
 	  <pluginManagement>
@@ -72,17 +73,8 @@
     <version>4.1.2</version>
 </dependency>
 
-   	<dependency>
-   		<groupId>com.obsqura</groupId>
-   		<artifactId>Abstract</artifactId>
-   		<version>0.0.1-SNAPSHOT</version>
-   	</dependency>
-   	<dependency>
-   		<groupId>automation</groupId>
-   		<artifactId>amazon</artifactId>
-   		<version>0.0.1-SNAPSHOT</version>
-   	</dependency>
+   	
    </dependencies>
   
-  <name>QA_Legend</name>
+ 
 </project>
