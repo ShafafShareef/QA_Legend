@@ -15,18 +15,20 @@
 		
 	
   <test thread-count="5" name="Test">
-	  <parameter name="browser" value="Chrome"></parameter>
-	  <classes>
+	 <!-- <parameter name="browser" value="Chrome"></parameter>
+-->	 
+	
+	 <classes>
 		  <class name="testCases.QA_LegendTestCases">
-			<!--   <methods> 
+			  <methods> 
 				   
-				  <include name="message_ComposeandSend"></include>
+				 <!-- <include name="message_ComposeandSend"></include>
 				  <include name="add_Notes"></include>
 				  <include name="add_Item"></include> 
 				    <include name="add_Announcements"></include>
-				   <include name="add_Notes"> </include>
+-->				   <include name="add_Notes"> </include>
 				  
-			  </methods> -->
+			  </methods> 
 			  
 		  </class>
 	  </classes>
