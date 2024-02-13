@@ -2,12 +2,12 @@
 <testng-results ignored="11" total="12" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-02-13T15:32:48 IST" name="Suite" finished-at="2024-02-13T15:32:58 IST" duration-ms="10023">
+  <suite started-at="2024-02-13T15:50:46 IST" name="Suite" finished-at="2024-02-13T15:50:59 IST" duration-ms="13123">
     <groups>
     </groups>
-    <test started-at="2024-02-13T15:32:48 IST" name="Test" finished-at="2024-02-13T15:32:58 IST" duration-ms="10023">
+    <test started-at="2024-02-13T15:50:46 IST" name="Test" finished-at="2024-02-13T15:50:59 IST" duration-ms="13123">
       <class name="testCases.QA_LegendTestCases">
-        <test-method is-config="true" signature="initialization(java.lang.String)[pri:0, instance:testCases.QA_LegendTestCases@702b8b12]" started-at="2024-02-13T15:32:48 IST" name="initialization" finished-at="2024-02-13T15:32:54 IST" duration-ms="5641" status="PASS">
+        <test-method is-config="true" signature="initialization(java.lang.String)[pri:0, instance:testCases.QA_LegendTestCases@702b8b12]" started-at="2024-02-13T15:50:46 IST" name="initialization" finished-at="2024-02-13T15:50:53 IST" duration-ms="7195" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -18,10 +18,10 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- initialization -->
-        <test-method signature="addEvent()[pri:4, instance:testCases.QA_LegendTestCases@702b8b12]" started-at="2024-02-13T15:32:54 IST" name="addEvent" finished-at="2024-02-13T15:32:58 IST" duration-ms="4333" status="PASS">
+        <test-method signature="add_Announcements()[pri:11, instance:testCases.QA_LegendTestCases@702b8b12]" started-at="2024-02-13T15:50:53 IST" name="add_Announcements" finished-at="2024-02-13T15:50:59 IST" duration-ms="5882" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- addEvent -->
+        </test-method> <!-- add_Announcements -->
       </class> <!-- testCases.QA_LegendTestCases -->
     </test> <!-- Test -->
   </suite> <!-- Suite -->

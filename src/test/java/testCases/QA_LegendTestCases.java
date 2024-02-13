@@ -296,30 +296,7 @@ public class QA_LegendTestCases extends BaseClass{
 		
 	}
 	
-	@Test(priority = 11)
-	public void add_Announcements() throws IOException, AWTException, InterruptedException {
-		homePage.scrollSidepanel();
-		homePage.clickOnDashboardAnnouncements();
-		announcementPage.clickOn_AddAnnouncement();
-		String announcment_title=ExcelUtility.getString(1, 0, excelfilePath, "Announcement")+FakerUtilities.randomNumberCreation();
-		announcementPage.inputTitle(announcment_title);
-		String announcment=ExcelUtility.getString(1, 1, excelfilePath, "Announcement");
-		announcementPage.input_Announcement(announcment);
-		String s_date = DateUtilities.getCurrentDate();
-		announcementPage.input_AnnouncementStartDate(s_date);
-		//LocalDate tdate= DateUtilities.getTommarowDate();
-		String e_date = s_date;
-		announcementPage.input_AnnouncementEndDate(e_date);
-		announcementPage.scrolluptoSave();	
-		announcementPage.announcement_Savebuton();
-		String actual_ViewButton_Title = announcementPage.toGetActual_View_button_Title();
-		String expected_ViewButton_Title = prop.getProperty("viewButton_Title");
-		org.testng.Assert.assertEquals(actual_ViewButton_Title, expected_ViewButton_Title);
-		
-
-		
-	}
-	@Test(priority = 12)
+		@Test(priority = 12)
 	public void applyAndAssignLeave() throws IOException, InterruptedException 
 	{	
 		homePage.scrollSidepanel();
@@ -338,7 +315,30 @@ public class QA_LegendTestCases extends BaseClass{
 		org.testng.Assert.assertEquals(title_ofLeave_Page, title_ofthe_Page);
 		 
 	}
+		@Test(priority = 11)
+		public void add_Announcements() throws IOException, AWTException, InterruptedException {
+			homePage.scrollSidepanel();
+			homePage.clickOnDashboardAnnouncements();
+			announcementPage.clickOn_AddAnnouncement();
+			String announcment_title=ExcelUtility.getString(1, 0, excelfilePath, "Announcement")+FakerUtilities.randomNumberCreation();
+			announcementPage.inputTitle(announcment_title);
+			String announcment=ExcelUtility.getString(1, 1, excelfilePath, "Announcement");
+			announcementPage.input_Announcement(announcment);
+			String s_date = DateUtilities.getCurrentDate();
+			announcementPage.input_AnnouncementStartDate(s_date);
+			//LocalDate tdate= DateUtilities.getTommarowDate();
+			String e_date = s_date;
+			announcementPage.input_AnnouncementEndDate(e_date);
+			announcementPage.scrolluptoSave();	
+			announcementPage.announcement_Savebuton();
+			String actual_ViewButton_Title = announcementPage.toGetActual_View_button_Title();
+			String expected_ViewButton_Title = prop.getProperty("viewButton_Title");
+			org.testng.Assert.assertEquals(actual_ViewButton_Title, expected_ViewButton_Title);
 			
+
+			
+		}
+	
 	
 	
 
