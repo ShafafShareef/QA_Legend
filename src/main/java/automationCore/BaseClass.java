@@ -11,6 +11,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.testng.annotations.AfterMethod;
 
 import com.google.common.io.Files;
 
@@ -46,6 +47,10 @@ public class BaseClass{
 			return destinationFile;
 			//driver screenshot method
 		}
-
+		
+		@AfterMethod
+		public void tearDown() {
+			driver.quit();
+		}
 
 }
