@@ -85,6 +85,12 @@ public class QA_LegendTestCases extends BaseClass{
 		loginPage.clickLoginButton();
 		
 		}
+	
+	
+	@AfterMethod
+	public void tearDown() {
+		driver.quit();
+	}
 
 	
 		
