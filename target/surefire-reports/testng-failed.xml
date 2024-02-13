@@ -9,10 +9,9 @@
     <classes>
       <class name="testCases.QA_LegendTestCases">
         <methods>
-          <include name="add_Item"/>
           <include name="addEvent"/>
           <include name="initialization"/>
-          <include name="addNoteusingQuickIcon"/>
+          <include name="add_Notes"/>
         </methods>
       </class> <!-- testCases.QA_LegendTestCases -->
     </classes>
