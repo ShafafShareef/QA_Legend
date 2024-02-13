@@ -3,24 +3,16 @@
 import java.awt.AWTException;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Properties;
 
-import org.apache.poi.util.SystemOutLogger;
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import automationCore.BaseClass;
-import dev.failsafe.internal.util.Assert;
 import pageClasses.QA_Legend_AnnouncementPage;
 import pageClasses.QA_Legend_ClientPage;
 import pageClasses.QA_Legend_EventPage;
@@ -35,7 +27,6 @@ import utilities.DateUtilities;
 import utilities.ExcelUtility;
 import utilities.FakerUtilities;
 import utilities.PageUtilities;
-import utilities.WaitUtilities;
 
 public class QA_LegendTestCases extends BaseClass{
 	WebDriver driver;
