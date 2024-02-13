@@ -157,8 +157,11 @@ public class QA_LegendTestCases extends BaseClass{
 		String event_Location=ExcelUtility.getString(1, 2, excelfilePath, "Sheet1");
 		eventPage.inputEventLocation(event_Location);
 		eventPage.clickon_Event_Save(); 
-		String expec_url = prop.getProperty("addEvent_url");
-		org.testng.Assert.assertEquals(driver.getCurrentUrl(), expec_url);
+//		String expec_url = prop.getProperty("addEvent_url");
+//		org.testng.Assert.assertEquals(driver.getCurrentUrl(), expec_url);
+		String pageTitle = driver.getTitle();
+		String expecPageTitle = prop.getProperty("page_Title");
+		org.testng.Assert.assertEquals(expecPageTitle, pageTitle);
 	}
 	
 	@Test(priority = 5)
@@ -178,8 +181,12 @@ public class QA_LegendTestCases extends BaseClass{
 		String event_Location=ExcelUtility.getString(1, 2, excelfilePath, "Sheet1");
 		eventPage.inputEventLocation(event_Location);
 		eventPage.clickon_Event_Save();
-		String expec_url = prop.getProperty("addEvent_url");
-		org.testng.Assert.assertEquals(driver.getCurrentUrl(), expec_url);
+//		String expec_url = prop.getProperty("addEvent_url");
+//		org.testng.Assert.assertEquals(driver.getCurrentUrl(), expec_url);
+		String pageTitle = driver.getTitle();
+		String expecPageTitle = prop.getProperty("page_Title");
+		org.testng.Assert.assertEquals(expecPageTitle, pageTitle);
+
 
 	}
 

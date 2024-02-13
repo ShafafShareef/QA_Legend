@@ -26,6 +26,8 @@ public class QA_Legend_EventPage {
 	WebElement inputfield_location;
 	@FindBy(xpath = "//button[text()=' Save']")
 	WebElement event_Save_button;
+	@FindBy(xpath = "//h1[text()='Event calendar']")
+	WebElement EventCalendar;
 	
 	
 	
@@ -75,4 +77,5 @@ public class QA_Legend_EventPage {
 	public void clickon_Event_Save() {
 		PageUtilities.clickOnElement(event_Save_button);
 	}
+	
 }
