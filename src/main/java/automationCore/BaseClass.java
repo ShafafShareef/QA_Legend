@@ -48,9 +48,6 @@ public class BaseClass{
 			//driver screenshot method
 		}
 		
-		@AfterMethod
-		public void tearDown() {
-			driver.quit();
-		}
+		
 
 }
