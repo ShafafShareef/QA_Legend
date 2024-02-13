@@ -178,6 +178,8 @@ public class QA_LegendTestCases extends BaseClass{
 		String event_Location=ExcelUtility.getString(1, 2, excelfilePath, "Sheet1");
 		eventPage.inputEventLocation(event_Location);
 		eventPage.clickon_Event_Save();
+		String expec_url = prop.getProperty("addEvent_url");
+		org.testng.Assert.assertEquals(driver.getCurrentUrl(), expec_url);
 
 	}
 
@@ -198,6 +200,7 @@ public class QA_LegendTestCases extends BaseClass{
 		String actualNoteTitle = notePage.toGetActualNoteTitle();
 		org.testng.Assert.assertEquals(actualNoteTitle, noteTitle);		
 	}
+	
 	@Test(priority = 7)
 	public void addNoteusingQuickIcon() throws IOException, AWTException, InterruptedException {
 		quickaddNotePage.clickOnQuickAddIcon();
@@ -303,7 +306,7 @@ public class QA_LegendTestCases extends BaseClass{
 		announcementPage.scrolluptoSave();	
 		announcementPage.announcement_Savebuton();
 		String actual_ViewButton_Title = announcementPage.toGetActual_View_button_Title();
-		String expected_ViewButton_Title = "View";
+		String expected_ViewButton_Title = prop.getProperty("viewButton_Title");
 		org.testng.Assert.assertEquals(actual_ViewButton_Title, expected_ViewButton_Title);
 		
 

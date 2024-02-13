@@ -28,7 +28,7 @@
 				  <include name="add_Item"></include> 
 				    <include name="add_Announcements"></include>
 				-->  
-				 <include name="login_Negative_Scnrios"> </include>
+				 <include name="addEvent"> </include>
 				  
 			  </methods>
 		  

@@ -31,7 +31,7 @@ public class BaseClass{
 		else {
 			throw new Exception("Invalid Browser");
 		}
-		driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS);
 		return driver;
 	}
 	
